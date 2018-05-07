@@ -12,7 +12,6 @@ public class Menu
 		{
 			System.out.println(voci[i]+" ---> "+i);
 		}
-		System.out.println("Altro ---> Esci");
 
 	}
 }

@@ -1,14 +1,15 @@
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) 
+	public static void main(String[] args) throws ProdottoException 
 	{
+		ListaProdotti ListaProdotti= new ListaProdotti();
 		int x= 0;
 		Scanner tastiera= new Scanner(System.in);
 		Menu menu = new Menu();
 		String[] m1=new String [5];
 		m1[0]="aggiungi prodotto";
-		m1[1]="elimina prodotto";
+		m1[1]="elimina dalla vendita un prodotto"; // + csv: prodottiEliminati.txt
 		m1[2]="vendi prodotto";
 		m1[3]="compra prodotto";
 		m1[4]="visualizza prodotti";
@@ -25,33 +26,42 @@ public class Main {
 		x=tastiera.nextInt();
 		int y;
 		
-		
-		
-		
-		
-		do {
+do {
 		switch (x) 
 		{
 		case 0:
-			//codice cosa deve fare
+			
+			Scanner tastiera1= new Scanner(System.in);
+			String tipoProdotto;
+			int numeroProdotto;
+			String codiceProdotto;
+			
+			tipoProdotto=tastiera.nextLine();
+			numeroProdotto=tastiera.nextInt();
+			codiceProdotto=tastiera.nextLine();
+			Prodotto prodotto1= new Prodotto(tipoProdotto,numeroProdotto,codiceProdotto);
+			ListaProdotti.inserisciInCoda(prodotto1);
+			
 		break;
 		
 		case 1:
-			//codice cosa deve fare
+
 		break;
 		
 		case 2:
-			//codice cosa deve fare
+			int venduto;
+			
 		break;
 		
 		case 3:
-			//codice cosa deve fare
+			int comprato;
+			
 		break;
 		
 		case 4:
 			menu1.show(m2);
 			y=tastiera.nextInt();
-do {
+	do {
 				switch (y) 
 			{
 			case 0:
@@ -66,14 +76,14 @@ do {
 				default:
 				break;
 			}
-} while (y!=0 && y!=1 && y!=2);
+	} while (y == 3);
 
 		break;		
 
 		default:
 			break;
 		}
-		} while (x!=0 && x!=1 && x!=2 && x!=3 && x!=4);
+} while (x!=0 && x!=1 && x!=2 && x!=3 && x!=4);
 
 	}
 }
