@@ -1,32 +1,29 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) throws ProdottoException 
+	public static void main(String[] args) throws ProdottoException, NumberFormatException, IOException 
 	{
 		ListaProdotti ListaProdotti= new ListaProdotti();
 		int x= 0;
-		Scanner tastiera= new Scanner(System.in);
+		ConsoleInput tastiera= new ConsoleInput();
 		Menu menu = new Menu();
-		String[] m1=new String [5];
+		String[] m1=new String [8];
 		m1[0]="aggiungi prodotto";
 		m1[1]="elimina dalla vendita un prodotto"; // + csv: prodottiEliminati.txt
 		m1[2]="vendi prodotto";
 		m1[3]="compra prodotto";
-		m1[4]="visualizza prodotti";
+		m1[4]="visualizza in ordine alfabetico";
+		m1[5]="visualizza prodotti minore di x";
+		m1[6]="visualizza in base alle quantità rimasta";
+		m1[7]="esci";
 		menu.show(m1);
 		
-		
-		Menu menu1= new Menu();
-		String[] m2= new String[4];
-		m2[0]="visualizza in ordine alfabetico";
-		m2[1]="visualizza prodotti minore di x";
-		m2[2]="visualizza in base alle quantità rimasta";
-		m2[3]="esci";
-
-		x=tastiera.nextInt();
-		int y;
-		
 do {
+		menu.show(m1);
+		
+		x=tastiera.readInt();
+
 		switch (x) 
 		{
 		case 0:
@@ -35,17 +32,23 @@ do {
 			String tipoProdotto;
 			int numeroProdotto;
 			String codiceProdotto;
-			
-			tipoProdotto=tastiera.nextLine();
-			numeroProdotto=tastiera.nextInt();
-			codiceProdotto=tastiera.nextLine();
+			System.out.println("inserisci il tipo di prodotto");
+			tipoProdotto=tastiera.readString();
+			System.out.println("inserisci il numero di prodott1");
+			numeroProdotto=tastiera.readInt();
+			System.out.println("inserisci il codice del prodotto");
+			codiceProdotto=tastiera.readString();
 			Prodotto prodotto1= new Prodotto(tipoProdotto,numeroProdotto,codiceProdotto);
 			ListaProdotti.inserisciInCoda(prodotto1);
-			
-		break;
+			System.out.println(prodotto1.ToStringProdotto(tipoProdotto, numeroProdotto, codiceProdotto));
+			tastiera1.nextLine();
+			break;
 		
 		case 1:
-
+				int x1=0;
+				System.out.println("prodotto da eliminare in posizione: ");
+				x1=tastiera.readInt();
+				ListaProdotti.eliminaInPosizione(x1);
 		break;
 		
 		case 2:
@@ -59,31 +62,18 @@ do {
 		break;
 		
 		case 4:
-			menu1.show(m2);
-			y=tastiera.nextInt();
-	do {
-				switch (y) 
-			{
-			case 0:
 				//visualizza 1
-			break;
-			case 1:
+		break;
+		case 5:
 				//visualizza 2
-			break;
-			case 2:
+		break;
+		case 6:
 				//visualizza 3
+		break;
+			default:
 			break;
-				default:
-				break;
-			}
-	} while (y == 3);
-
-		break;		
-
-		default:
-			break;
-		}
-} while (x!=0 && x!=1 && x!=2 && x!=3 && x!=4);
+					}
+} while (x !=7);
 
 	}
 }
