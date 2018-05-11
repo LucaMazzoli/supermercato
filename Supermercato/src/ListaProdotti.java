@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public class ListaProdotti implements Serializable
 {
+	ConsoleInput tastiera= new ConsoleInput();
 	private Nodo head;
 	private int elementi;
 	
@@ -105,6 +106,61 @@ public class ListaProdotti implements Serializable
 		elementi++;
 	}
 	
+
+	public Prodotto[] creaArreyProdotto() throws ProdottoException
+	{
+	Prodotto[] elencoProdotti = new Prodotto[getElementi()];
+	
+		
+		for (int i = 0; i < elencoProdotti.length; i++) 
+		{
+			elencoProdotti[i]=getProdotto(i+1);
+		}
+		
+		
+		return elencoProdotti;
+	}
+	
+	public static int scambia (Prodotto[] array, int pos1, int pos2)
+	{
+		Prodotto s;
+		if (pos1<0 || pos2<0 || pos1>=array.length || pos2>=array.length)
+			return -1;
+		else
+		{
+			s=array[pos1];
+			array[pos1]=array[pos2];
+			array[pos2]=s;
+			return 0;
+		}			
+	}
+	
+	private static Prodotto[] copiaArray(Prodotto[] array)
+	{
+		Prodotto[] arrayCopia=new Prodotto[array.length];
+		for (int i = 0; i < arrayCopia.length; i++) 
+			arrayCopia[i]=array[i];
+		return arrayCopia;
+	}
+	
+	public static Prodotto[] ordinaProdottiCrescente(Prodotto[] array)
+	{
+		
+		Prodotto[] arrayCopia=copiaArray(array);
+		
+		for (int i = 0; i < arrayCopia.length-1; i++) 
+		{
+			
+			for (int j = i+1; j < arrayCopia.length; j++) 
+			{
+				if (arrayCopia[i].getTipoProdotto().compareTo(arrayCopia[j].getTipoProdotto())<0)
+					scambia(arrayCopia,i,j);
+			}
+		}
+		return arrayCopia;
+	
+	}
+	
 	public void eliminaInTesta() throws ProdottoException
 	{
 		if (elementi==0)
@@ -127,7 +183,31 @@ public class ListaProdotti implements Serializable
 		p.setLink(null);
 		elementi--;
 	}
-	
+	public void aggiornaQuantitaVenduta(String prodottoCercato, int quantita) throws NumberFormatException, IOException, ProdottoException
+	{
+		Prodotto prodotto;
+		prodotto=cercaProdotti(prodottoCercato);
+		prodotto.setNumeroProdotto(prodotto.getNumeroProdotto()-quantita);
+	}
+	public void aggiornaQuantitaComprata(String prodottoCercato, int quantita) throws NumberFormatException, IOException, ProdottoException
+	{
+		Prodotto prodotto;
+		prodotto=cercaProdotti(prodottoCercato);
+		prodotto.setNumeroProdotto(prodotto.getNumeroProdotto()+quantita);
+	}
+	public Prodotto cercaProdotti(String prodottoCercare) throws NumberFormatException, IOException, ProdottoException
+	{
+		Prodotto prodotto;
+		for (int i = 1; i <= getElementi(); i++) 
+		{
+			prodotto=getProdotto(i);
+			if (prodotto.getTipoProdotto().compareTo(prodottoCercare)==0) 
+			{
+				return prodotto;
+			}
+		}
+		return null;
+	}
 	public void eliminaInPosizione(int posizione) throws ProdottoException
 	{
 		if (elementi==0)
@@ -224,7 +304,7 @@ public class ListaProdotti implements Serializable
 			return prodotto;		
 			
 	}
-	public void salvaFesta(String nomeFile) throws IOException
+	public void salvaProdotto(String nomeFile) throws IOException
 	{
 		FileOutputStream file =new FileOutputStream(nomeFile);
 		ObjectOutputStream writer=new ObjectOutputStream(file);

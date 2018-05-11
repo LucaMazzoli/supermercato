@@ -39,7 +39,7 @@ public Prodotto (String tipoProdotto, int numeroProdotto, String codiceProdotto)
 		{
 			this.codiceProdotto = codiceIdentificativo;
 		}
-	public String ToStringProdotto(String tipoProdotto, int numeroProdotto, String codiceProdotto)
+	public String ToString()
 	{
 		String Stringa= "tipo: "+getTipoProdotto() + '\n' + "codice: " + getCodiceIdentificativo() + '\n' + "numero: " + getNumeroProdotto();
 		return Stringa;
