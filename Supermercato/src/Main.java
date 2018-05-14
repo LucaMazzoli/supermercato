@@ -30,6 +30,7 @@ do {
 			String tipoProdotto;
 			int numeroProdotto = 0;
 			String codiceProdotto;
+			
 			System.out.println("inserisci il tipo di prodotto");
 			tipoProdotto=tastiera.readString();
 			System.out.println("inserisci il numero di prodotti");
@@ -37,21 +38,22 @@ do {
 			System.out.println("inserisci il codice del prodotto");
 			codiceProdotto=tastiera.readString();
 			Prodotto prodotto1= new Prodotto(tipoProdotto,numeroProdotto,codiceProdotto);
-			ListaProdotti.inserisciInTesta(prodotto1);
+			ListaProdotti.inseriscInPosizione(prodotto1, ListaProdotti.getElementi()+1);
 			tastiera1.nextLine();
-			System.out.println(ListaProdotti.toString());
 			break;
 		
 		case 1: //elimina prodotto
+			
 				String x1;
 				Prodotto prodottoEliminare;
 				System.out.println("prodotto da eliminare ");
 				x1=tastiera.readString();
 				
-				for (int i = 0; i < ListaProdotti.getElementi()-1; i++) 
+				for (int i = 1; i < ListaProdotti.getElementi()+1; i++) 
 				{
-					if (ListaProdotti.getProdotto(i).getTipoProdotto()==x1)
+					if (ListaProdotti.getProdotto(i).getTipoProdotto().compareTo(x1) == 0)
 					{
+						ListaProdotti.esportaCSV(i);
 						ListaProdotti.eliminaInPosizione(i);
 					}
 				}
@@ -81,16 +83,19 @@ do {
 		break;
 		
 		case 4://visualizza alfabetico
-			Prodotto[] ArreyProdotti = ListaProdotti.creaArreyProdotto(); 
-			ArreyProdotti=ListaProdotti.ordinaProdottiCrescente(ArreyProdotti);
-			for (int i = 0; i < ArreyProdotti.length; i++) 
+			Prodotto[] diocane = new Prodotto[ListaProdotti.getElementi()];
+			diocane = ListaProdotti.creaArreyProdotto();
+			ListaProdotti.ordinaProdottiCrescente(diocane);
+			
+			for (int i = 0; i < diocane.length; i++) 
 			{
-				System.out.println(ArreyProdotti[i].ToString()+'\n');
+				System.out.println(diocane[i].ToString()+'\n');
 			}
 			break;
 			
 		case 5:
 				//visualizza quantità da meno a piu
+			
 		break;
 		
 		case 6: //visualizza quantita inferiore a quaInt

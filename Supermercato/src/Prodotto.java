@@ -44,4 +44,7 @@ public Prodotto (String tipoProdotto, int numeroProdotto, String codiceProdotto)
 		String Stringa= "tipo: "+getTipoProdotto() + '\n' + "codice: " + getCodiceIdentificativo() + '\n' + "numero: " + getNumeroProdotto();
 		return Stringa;
 	}
+	
+
+
 }

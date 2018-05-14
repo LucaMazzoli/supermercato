@@ -1,0 +1,3 @@
+tipo: ciao
+codice: rge
+numero: 153

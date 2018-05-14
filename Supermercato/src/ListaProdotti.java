@@ -1,13 +1,7 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 
 public class ListaProdotti implements Serializable
 {
-	ConsoleInput tastiera= new ConsoleInput();
 	private Nodo head;
 	private int elementi;
 	
@@ -109,56 +103,13 @@ public class ListaProdotti implements Serializable
 
 	public Prodotto[] creaArreyProdotto() throws ProdottoException
 	{
-	Prodotto[] elencoProdotti = new Prodotto[getElementi()];
-	
-		
-		for (int i = 0; i < elencoProdotti.length; i++) 
+		Prodotto[] ArreyProdotti = new Prodotto[getElementi()];
+		for (int i = 0; i < ArreyProdotti.length; i++) 
 		{
-			elencoProdotti[i]=getProdotto(i+1);
+			ArreyProdotti[i]=getProdotto(i+1);
 		}
 		
-		
-		return elencoProdotti;
-	}
-	
-	public static int scambia (Prodotto[] array, int pos1, int pos2)
-	{
-		Prodotto s;
-		if (pos1<0 || pos2<0 || pos1>=array.length || pos2>=array.length)
-			return -1;
-		else
-		{
-			s=array[pos1];
-			array[pos1]=array[pos2];
-			array[pos2]=s;
-			return 0;
-		}			
-	}
-	
-	private static Prodotto[] copiaArray(Prodotto[] array)
-	{
-		Prodotto[] arrayCopia=new Prodotto[array.length];
-		for (int i = 0; i < arrayCopia.length; i++) 
-			arrayCopia[i]=array[i];
-		return arrayCopia;
-	}
-	
-	public static Prodotto[] ordinaProdottiCrescente(Prodotto[] array)
-	{
-		
-		Prodotto[] arrayCopia=copiaArray(array);
-		
-		for (int i = 0; i < arrayCopia.length-1; i++) 
-		{
-			
-			for (int j = i+1; j < arrayCopia.length; j++) 
-			{
-				if (arrayCopia[i].getTipoProdotto().compareTo(arrayCopia[j].getTipoProdotto())<0)
-					scambia(arrayCopia,i,j);
-			}
-		}
-		return arrayCopia;
-	
+		return ArreyProdotti;
 	}
 	
 	public void eliminaInTesta() throws ProdottoException
@@ -259,19 +210,13 @@ public class ListaProdotti implements Serializable
 		return p.getInfo();		
 	}
 	
-	public void esportaCSV (String nomeFile) throws IOException, ProdottoException
+	public void esportaCSV (int i) throws IOException, ProdottoException
 	{
-		TextFile file= new TextFile (nomeFile,'W');
-		String prodottoCSV;
-		Prodotto prodotto;
+		PrintWriter file_output =new PrintWriter ( new BufferedWriter (new FileWriter ("ProdottiEliminati.txt", true )));
+	
+		file_output.println(getProdotto(i).ToString());
 		
-		for (int i = 1; i <= getElementi(); i++) 
-		{
-			prodotto=getProdotto(i);
-			prodottoCSV=prodotto.getTipoProdotto()+";"+prodotto.getNumeroProdotto()+";"+prodotto.getCodiceIdentificativo()+";";
-			file.toFile(prodottoCSV);
-		}
-		file.closeFile();
+		file_output.close();
 		
 	}
 
@@ -324,4 +269,40 @@ public class ListaProdotti implements Serializable
 		file.close();
 		return prodotto;
 	}
+	
+///////////////////////////////	
+	
+	
+	public int scambia (Prodotto[] array, int pos1, int pos2)
+	{
+		Prodotto s;
+		if (pos1<0 || pos2<0 || pos1>=array.length || pos2>=array.length)
+			return -1;
+		else
+		{
+			s=array[pos1];
+			array[pos1]=array[pos2];
+			array[pos2]=s;
+			return 0;
+		}			
+	}
+	
+	public void ordinaProdottiCrescente(Prodotto[] arrayCopia)
+	{		
+		for (int i = 0; i < arrayCopia.length-1; i++) 
+		{				
+				if (arrayCopia[i].getTipoProdotto().compareTo(arrayCopia[i+1].getTipoProdotto())<0)
+					scambia(arrayCopia,i,i+1);
+		}
+	}
+	
+	private Prodotto[] copiaArray(Prodotto[] array)
+	{
+		Prodotto[] arrayCopia=new Prodotto[array.length];
+		for (int i = 0; i < arrayCopia.length; i++) 
+			arrayCopia[i]=array[i];
+		return arrayCopia;
+	}
+	
+	
 }
